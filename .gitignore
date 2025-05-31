@@ -1,0 +1,28 @@
+# Eclipse
+/.settings/
+/.project
+/.classpath
+
+# Maven
+/target/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IntelliJ IDEA (por si se abre con otro IDE)
+/.idea/
+/*.iml
+/out/
+
+# Archivos temporales de compilación
+*.class
+
+# Archivos de respaldo
+*~
+
+# Archivos de configuración de entorno
+.env
