@@ -1,15 +1,11 @@
 package app.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JFrame;
 
-import org.fife.ui.autocomplete.AutoCompletion;
-import org.fife.ui.autocomplete.CompletionProvider;
-
-import app.snippets.Snippets;
+import app.enums.ColoresPlantillas;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -26,25 +22,28 @@ public class VentanaPrincipal extends JFrame {
 	//---------- Constructor ----------
 	
 	public VentanaPrincipal() {
+		
 		//Setteando la ventana
-		setTitle("Ventana Principal");
+		setTitle("JVCE-JavaChadEditor");
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
-		setUndecorated(true); // sin bordes
 		setLocationRelativeTo(null);
+		
 		setLayout(new BorderLayout());
 		
 		//Setteando la barra moderna
-		BarraModerna barra = new BarraModerna(this , fuenteDeTexto);
+		Barra barra = new Barra(this , fuenteDeTexto);
+		
 		getContentPane().add(barra, BorderLayout.NORTH);
 
 		//Setteando el área de código
 		codeArea = new CodeArea(fuenteDeTexto);
-		CodeArea.configurarColores(codeArea);
-		Scroll scrollPane = new Scroll(codeArea);
-		getContentPane().add(scrollPane , BorderLayout.CENTER);
+
 		
+		Scroll scrollPane = new Scroll(codeArea);
+		
+		getContentPane().add(scrollPane , BorderLayout.CENTER);
 		
 	}
 	

@@ -6,11 +6,14 @@ import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
+import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rsyntaxtextarea.Token;
 
 import app.enums.ColoresPlantillas;
@@ -41,7 +44,7 @@ public class CodeArea extends RSyntaxTextArea{
 	
 	//---------- Constructor ----------
 	
-	public CodeArea(Font fuenteDeTexto) {
+	public CodeArea(Font fuenteDeTexto){
 		
 		this.fuenteDeTexto = fuenteDeTexto;
 		
@@ -49,6 +52,8 @@ public class CodeArea extends RSyntaxTextArea{
 		configuracionDeSyntax();
 		configuracionDeEstilo();
 		configurarSnippets();
+		configurarColores();
+		
 		
 		//Configuración adicional
 		setTabSize(4);
@@ -71,40 +76,58 @@ public class CodeArea extends RSyntaxTextArea{
 		setCloseCurlyBraces(true);
 		setCloseMarkupTags(true);
 		setAnimateBracketMatching(true);
+		
 	}
 	
 	private void configuracionDeEstilo() {
 		setCurrentLineHighlightColor(new Color(0 , 0, 0));
-		setFont(fuenteDeTexto);
+		
 		setMargin(new Insets(5, 5, 5, 5));
-		setBackground(java.awt.Color.black);
-		setForeground(java.awt.Color.white);
-		setCaretColor(java.awt.Color.red);
+		setFont(fuenteDeTexto);
 	}
 	
-	public static void configurarColores(RSyntaxTextArea codeArea) {
+	public void configurarColores() {
+		
+		
 		
 		Color[] c = ColoresPlantillas.getColoresAreaDeCodigo();
+		
+		// Aplicar fondo, texto, selección, cursor
+	    setBackground(c[0]);
+	    setForeground(c[2]);
+	    setCaretColor(c[13]);
+	    setSelectionColor(c[12]);
 
-	    codeArea.setBackground(c[0]);
-	    codeArea.setForeground(c[2]);
-	    codeArea.setCaretColor(c[13]);
-	    codeArea.setSelectionColor(c[12]);
+	    // Crear esquema de sintaxis
+	    SyntaxScheme scheme = new SyntaxScheme(true);
 
-	    SyntaxScheme scheme = codeArea.getSyntaxScheme();
+	    // Asignar colores específicos a estilos de tokens
 	    scheme.getStyle(Token.RESERVED_WORD).foreground = c[3];
+	    scheme.getStyle(Token.RESERVED_WORD_2).foreground = c[3];
 	    scheme.getStyle(Token.DATA_TYPE).foreground = c[4];
 	    scheme.getStyle(Token.LITERAL_STRING_DOUBLE_QUOTE).foreground = c[5];
+
 	    scheme.getStyle(Token.COMMENT_EOL).foreground = c[6];
 	    scheme.getStyle(Token.COMMENT_MULTILINE).foreground = c[6];
+	    scheme.getStyle(Token.COMMENT_DOCUMENTATION).foreground = c[6];
+	    scheme.getStyle(Token.COMMENT_KEYWORD).foreground = c[6];
+	    scheme.getStyle(Token.MARKUP_COMMENT).foreground = c[6];
+
 	    scheme.getStyle(Token.LITERAL_NUMBER_DECIMAL_INT).foreground = c[7];
+	    scheme.getStyle(Token.LITERAL_NUMBER_FLOAT).foreground = c[7];
+	    scheme.getStyle(Token.LITERAL_NUMBER_HEXADECIMAL).foreground = c[7];
+	    
+	    scheme.getStyle(Token.SEPARATOR).foreground = c[3];
+	    
 	    scheme.getStyle(Token.OPERATOR).foreground = c[8];
 	    scheme.getStyle(Token.ERROR_IDENTIFIER).foreground = c[9];
 	    scheme.getStyle(Token.FUNCTION).foreground = c[10];
 	    scheme.getStyle(Token.IDENTIFIER).foreground = c[11];
 
-	    codeArea.repaint();
+	    setSyntaxScheme(scheme);
+	    repaint();	
 	}
+
 	
 	//---------- Snippets ----------
 	
