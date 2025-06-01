@@ -43,12 +43,12 @@ public class VentanaPrincipal extends JFrame {
 		getContentPane().add(scrollPane , BorderLayout.CENTER);
 		
 		//Setteando el autocompletado/Snippets
-        CompletionProvider provider = Snippets.createCompletionProvider();
-        AutoCompletion ac = new AutoCompletion(provider);
-        ac.setAutoActivationEnabled(true); // activa al escribir
-        ac.setAutoActivationDelay(300);    // 300 ms de retardo
-        ac.setAutoCompleteSingleChoices(true); // autocompletar si hay una sola opción);
-        ac.install(codeArea);
+//        CompletionProvider provider = Snippets.createCompletionProvider();
+//        AutoCompletion ac = new AutoCompletion(provider);
+//        ac.setAutoActivationEnabled(true); // activa al escribir
+//        ac.setAutoActivationDelay(300);    // 300 ms de retardo
+//        ac.setAutoCompleteSingleChoices(true); // autocompletar si hay una sola opción);
+//        ac.install(codeArea);
 	}
 	
 	//---------- Getters y Setters ----------

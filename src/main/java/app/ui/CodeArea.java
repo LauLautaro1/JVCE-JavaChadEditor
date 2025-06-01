@@ -3,6 +3,10 @@ package app.ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -10,6 +14,8 @@ import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
 import org.fife.ui.rsyntaxtextarea.Token;
 
 import app.enums.ColoresPlantillas;
+import app.snippets.SnippetsKey;
+import app.snippets.SnippetsManager;
 
 
 /**
@@ -24,6 +30,10 @@ public class CodeArea extends RSyntaxTextArea{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	//---------- Variables ----------
+	
+	private SnippetsManager<SnippetsKey> snippetsManager;
+	
 	
 	//---------- Constructor ----------
 	
@@ -31,6 +41,7 @@ public class CodeArea extends RSyntaxTextArea{
 		//LLamamos a los métodos de configuración
 		configuracionDeSyntax();
 		configuracionDeEstilo();
+		configurarSnippets();
 		
 		//Configuración adicional
 		setTabSize(4);
@@ -86,6 +97,80 @@ public class CodeArea extends RSyntaxTextArea{
 	    scheme.getStyle(Token.IDENTIFIER).foreground = c[11];
 
 	    codeArea.repaint();
+	}
+	
+	//---------- Snippets ----------
+	
+	private void configurarSnippets() {
+		
+		//Creamos la clase SnippetsManager con un mapa vacío y la clase SnippetsKey
+		snippetsManager = new SnippetsManager<>(new HashMap<SnippetsKey, String>(), SnippetsKey.class);
+		
+		//Aqui agregariamos los snippets, por ejemplo:
+		
+		//Creamos la logica de los snippets, el control todo.
+		crearListenerDeSnippets();
+		
+	}
+	
+	private void crearListenerDeSnippets() {
+		
+		// Aquí se puede implementar un listener para detectar cuando se invocan
+		// snippets
+		// y reemplazar el texto en el área de código con el snippet correspondiente.
+		// Por ejemplo, al presionar una tecla específica o al escribir un prefijo.
+
+		this.addKeyListener((KeyListener) new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// Aquí podés poner el trigger, por ejemplo Tab o Ctrl+Espacio
+				if (e.getKeyCode() == KeyEvent.VK_TAB) {
+					usarSnippets();
+				}
+			}
+		});
+		
+	}
+	
+	private void usarSnippets() {
+		//Agarramos la palabra antes del cursor
+		String actualPalabra = obtenerPalabraAntesDelCaret();
+		
+		if (actualPalabra == null) return;
+
+		try {
+			SnippetsKey key = SnippetsKey.valueOf(actualPalabra.toUpperCase());
+			String snippet = snippetsManager.getSnippet(key);
+
+			if (snippet != null) {
+				reemplazarPalabraPorSnippet(actualPalabra, snippet);
+			}
+		} catch (IllegalArgumentException ex) {}
+	}
+	
+	private String obtenerPalabraAntesDelCaret() {
+		//obtenemos la posición del caret (cursor)
+		int caret = getCaretPosition();
+		try {
+			int start = caret - 1;
+			while (start >= 0 && Character.isJavaIdentifierPart(getText(start, 1).charAt(0))) {
+				start--;
+			}
+			start++;
+			return getText(start, caret - start);
+		} catch (Exception ex) {
+			return null;
+		}
+	}
+
+	private void reemplazarPalabraPorSnippet(String palabra, String remplazo) {
+		int caret = getCaretPosition();
+		try {
+			int start = caret - palabra.length();
+			replaceRange(remplazo, start, caret);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
