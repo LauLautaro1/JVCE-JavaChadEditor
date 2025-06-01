@@ -1,5 +1,6 @@
 package app.snippets;
 
+//Clase que define las claves de los snippets de código
 public enum SnippetsKey {
 	IF, FOR, WHILE, MAIN, SYSOUT, CLASS, INTERFACE, ENUM, TRY_CATCH, 
 	SWITCH, CASE, METHOD, CONSTRUCTOR, IMPORT, PACKAGE, STATIC_BLOCK, LAMBDA_EXPRESSION,

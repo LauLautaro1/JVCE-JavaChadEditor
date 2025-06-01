@@ -15,7 +15,10 @@ import org.fife.ui.rsyntaxtextarea.Token;
 
 import app.enums.ColoresPlantillas;
 import app.snippets.SnippetsKey;
+import app.snippets.SnippetsLoader;
 import app.snippets.SnippetsManager;
+
+
 
 
 /**
@@ -107,6 +110,8 @@ public class CodeArea extends RSyntaxTextArea{
 		snippetsManager = new SnippetsManager<>(new HashMap<SnippetsKey, String>(), SnippetsKey.class);
 		
 		//Aqui agregariamos los snippets, por ejemplo:
+		snippetsManager.loadFromJson(SnippetsLoader.cargarJsonDesdeRecursos("json/snippetsPrueba.json"));
+		
 		
 		//Creamos la logica de los snippets, el control todo.
 		crearListenerDeSnippets();
@@ -124,7 +129,7 @@ public class CodeArea extends RSyntaxTextArea{
 			@Override
 			public void keyReleased(KeyEvent e) {
 				// Aquí podés poner el trigger, por ejemplo Tab o Ctrl+Espacio
-				if (e.getKeyCode() == KeyEvent.VK_TAB) {
+				if (e.getKeyCode() == KeyEvent.VK_SPACE && (e.isControlDown())) {
 					usarSnippets();
 				}
 			}
@@ -136,15 +141,20 @@ public class CodeArea extends RSyntaxTextArea{
 		//Agarramos la palabra antes del cursor
 		String actualPalabra = obtenerPalabraAntesDelCaret();
 		
-		if (actualPalabra == null) return;
+		if (actualPalabra == null || actualPalabra.isEmpty()) return;
 
+		//Buscando snippets por aproximación
 		try {
-			SnippetsKey key = SnippetsKey.valueOf(actualPalabra.toUpperCase());
-			String snippet = snippetsManager.getSnippet(key);
-
-			if (snippet != null) {
-				reemplazarPalabraPorSnippet(actualPalabra, snippet);
+			for (SnippetsKey key : SnippetsKey.values()) {
+				if (key.name().toLowerCase().startsWith(actualPalabra.toLowerCase())) {
+					String snippet = snippetsManager.getSnippet(key);
+					if (snippet != null) {
+						reemplazarPalabraPorSnippet(snippet, actualPalabra.length());
+					}
+					break;		
+				}	
 			}
+			
 		} catch (IllegalArgumentException ex) {}
 	}
 	
@@ -163,15 +173,14 @@ public class CodeArea extends RSyntaxTextArea{
 		}
 	}
 
-	private void reemplazarPalabraPorSnippet(String palabra, String remplazo) {
-		int caret = getCaretPosition();
+	private void reemplazarPalabraPorSnippet(String snippet, int largoPalabra) {
 		try {
-			int start = caret - palabra.length();
-			replaceRange(remplazo, start, caret);
+			int pos = getCaretPosition();
+			int start = pos - largoPalabra;
+			getDocument().remove(start, largoPalabra);
+			getDocument().insertString(start, snippet, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
+	}	
 }

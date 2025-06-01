@@ -1,7 +1,10 @@
 package app.snippets;
 
+import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -78,20 +81,24 @@ public class SnippetsManager<T extends Enum<T>> {
 	/**
 	 * cargar snippets con JSON
 	 * @param json el JSON que contiene los snippets
+	 * el parametro de json lo podemos cargar con la funcion de la clase SnippetsLoader.loadJsonFromFile()
 	 */
 	public void loadFromJson(String json) {
-		if (json == null || json.isEmpty()) {
-			throw new IllegalArgumentException("el JSON no puede ser nulo o vacío");
-		}
+		//Validamos.
+		if (json == null || json.isEmpty()) {throw new IllegalArgumentException("el JSON no puede ser nulo o vacío");}
 		
+		
+		//Creamos un Gson para deserializar el JSON.
 		Gson gson = new Gson();
+		
+		//Cargamos el JSON en un mapa de claves y valores.
 		Type mapType = new TypeToken<Map<String, String>>() {}.getType();
 		Map<String, String> rawSnippets = gson.fromJson(json, mapType);
 
-		if (rawSnippets == null) {
-			throw new IllegalArgumentException("No se pudieron cargar los snippets desde el JSON");
-		}
+		//Validamos que se hayan cargado los snippets.
+		if (rawSnippets == null) {throw new IllegalArgumentException("No se pudieron cargar los snippets desde el JSON");}
 
+		
 		for (Map.Entry<String, String> entry : rawSnippets.entrySet()) {
 			try {
 				T key = Enum.valueOf(enumType, entry.getKey());
@@ -101,8 +108,5 @@ public class SnippetsManager<T extends Enum<T>> {
 			}
 		}
 	}
-	
-	
-	
 	
 }
