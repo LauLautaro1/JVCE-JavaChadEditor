@@ -30,10 +30,14 @@ public class BarraModerna extends JPanel {
 	//---------- Variables ----------
 	
 	private JFrame padre;
+	
+	private Font fuenteDetexto;
 
 	//---------- Constructor ----------
 	
-	public BarraModerna(JFrame frame) {
+	public BarraModerna(JFrame frame , Font fuenteDeTexto) {
+		
+		this.fuenteDetexto = fuenteDeTexto;
 		
 		this.padre = frame;
 		
@@ -46,12 +50,21 @@ public class BarraModerna extends JPanel {
         
         //Botón cerrar
         JButton botonCerrar = new JButton("X");
-        botonCerrar.setFont(new Font("Consolas", Font.PLAIN, 14));
+        botonCerrar.setFont(this.fuenteDetexto);
         botonCerrar.setForeground(Color.WHITE);
-        botonCerrar.setBackground(colores[1]);
+        botonCerrar.setBackground(colores[0]);
         botonCerrar.setBorderPainted(false);
         botonCerrar.setFocusPainted(false);
         botonCerrar.setPreferredSize(new Dimension(45, 30));
+        //Configurando cuando el mouse esta arriba del boton, basicamente cambia de color.
+        botonCerrar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            	botonCerrar.setBackground(colores[1]);}
+            @Override
+            public void mouseExited(MouseEvent e) {
+            	botonCerrar.setBackground(colores[0]);}});
+		
         botonCerrar.addActionListener(e -> System.exit(0));
         add(botonCerrar, java.awt.BorderLayout.EAST);
         

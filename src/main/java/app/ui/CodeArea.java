@@ -37,10 +37,14 @@ public class CodeArea extends RSyntaxTextArea{
 	
 	private SnippetsManager<SnippetsKey> snippetsManager;
 	
+	private Font fuenteDeTexto;
 	
 	//---------- Constructor ----------
 	
-	public CodeArea() {
+	public CodeArea(Font fuenteDeTexto) {
+		
+		this.fuenteDeTexto = fuenteDeTexto;
+		
 		//LLamamos a los métodos de configuración
 		configuracionDeSyntax();
 		configuracionDeEstilo();
@@ -71,7 +75,7 @@ public class CodeArea extends RSyntaxTextArea{
 	
 	private void configuracionDeEstilo() {
 		setCurrentLineHighlightColor(new Color(0 , 0, 0));
-		setFont(new Font("Consolas", Font.PLAIN, 14));
+		setFont(fuenteDeTexto);
 		setMargin(new Insets(5, 5, 5, 5));
 		setBackground(java.awt.Color.black);
 		setForeground(java.awt.Color.white);

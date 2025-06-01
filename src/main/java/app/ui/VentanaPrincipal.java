@@ -2,6 +2,7 @@ package app.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 
@@ -19,6 +20,8 @@ public class VentanaPrincipal extends JFrame {
 	
 	//---------- Variables ----------
 	private CodeArea codeArea;
+	
+	private static Font fuenteDeTexto = app.files.FontLoader.cargarFuenteNerd(14);
 
 	//---------- Constructor ----------
 	
@@ -33,22 +36,16 @@ public class VentanaPrincipal extends JFrame {
 		setLayout(new BorderLayout());
 		
 		//Setteando la barra moderna
-		BarraModerna barra = new BarraModerna(this);
+		BarraModerna barra = new BarraModerna(this , fuenteDeTexto);
 		getContentPane().add(barra, BorderLayout.NORTH);
 
 		//Setteando el área de código
-		codeArea = new CodeArea();
+		codeArea = new CodeArea(fuenteDeTexto);
 		CodeArea.configurarColores(codeArea);
 		Scroll scrollPane = new Scroll(codeArea);
 		getContentPane().add(scrollPane , BorderLayout.CENTER);
 		
-		//Setteando el autocompletado/Snippets
-//        CompletionProvider provider = Snippets.createCompletionProvider();
-//        AutoCompletion ac = new AutoCompletion(provider);
-//        ac.setAutoActivationEnabled(true); // activa al escribir
-//        ac.setAutoActivationDelay(300);    // 300 ms de retardo
-//        ac.setAutoCompleteSingleChoices(true); // autocompletar si hay una sola opción);
-//        ac.install(codeArea);
+		
 	}
 	
 	//---------- Getters y Setters ----------
