@@ -6,18 +6,15 @@ import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rsyntaxtextarea.SyntaxScheme;
-import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rsyntaxtextarea.Token;
 
 import app.enums.ColoresPlantillas;
-import app.snippets.SnippetsKey;
+import app.snippets.Snippets;
 import app.snippets.SnippetsLoader;
 import app.snippets.SnippetsManager;
 
@@ -38,7 +35,7 @@ public class CodeArea extends RSyntaxTextArea{
 	
 	//---------- Variables ----------
 	
-	private SnippetsManager<SnippetsKey> snippetsManager;
+	private SnippetsManager snippetsManager;
 	
 	private Font fuenteDeTexto;
 	
@@ -134,10 +131,10 @@ public class CodeArea extends RSyntaxTextArea{
 	private void configurarSnippets() {
 		
 		//Creamos la clase SnippetsManager con un mapa vacío y la clase SnippetsKey
-		snippetsManager = new SnippetsManager<>(new HashMap<SnippetsKey, String>(), SnippetsKey.class);
+		snippetsManager = new SnippetsManager();
 		
 		//Aqui agregariamos los snippets, por ejemplo:
-		snippetsManager.loadFromJson(SnippetsLoader.cargarJsonDesdeRecursos("json/snippetsPrueba.json"));
+		snippetsManager.loadFromJson(SnippetsLoader.cargarJsonDesdeRecursos("json/SnippetsJava.json"));
 		
 		
 		//Creamos la logica de los snippets, el control todo.
@@ -164,26 +161,39 @@ public class CodeArea extends RSyntaxTextArea{
 		
 	}
 	
+	//Buscamos los snippets que coincidan con la palabra antes del cursor. esto es por aproximacion o exactitud.
 	private void usarSnippets() {
-		//Agarramos la palabra antes del cursor
-		String actualPalabra = obtenerPalabraAntesDelCaret();
-		
-		if (actualPalabra == null || actualPalabra.isEmpty()) return;
+	    // Agarramos la palabra antes del cursor
+	    String actualPalabra = obtenerPalabraAntesDelCaret();
 
-		//Buscando snippets por aproximación
-		try {
-			for (SnippetsKey key : SnippetsKey.values()) {
-				if (key.name().toLowerCase().startsWith(actualPalabra.toLowerCase())) {
-					String snippet = snippetsManager.getSnippet(key);
-					if (snippet != null) {
-						reemplazarPalabraPorSnippet(snippet, actualPalabra.length());
-					}
-					break;		
-				}	
-			}
-			
-		} catch (IllegalArgumentException ex) {}
+	    if (actualPalabra == null || actualPalabra.isEmpty()) return;
+
+	    // Buscamos claves de snippets
+	    LinkedList<String> keys = snippetsManager.getKeys();
+	    Snippets mejorCoincidencia = null;
+
+	    for (String key : keys) {
+	        // Coincidencia exacta (prioritaria)
+	        if (key.equalsIgnoreCase(actualPalabra)) {
+	            Snippets snippet = snippetsManager.getSnippet(key);
+	            if (snippet != null) {
+	                reemplazarPalabraPorSnippet(snippet.getValue(), actualPalabra.length());
+	                return;
+	            }
+	        }
+
+	        // Coincidencia parcial: empieza igual
+	        if (key.toLowerCase().startsWith(actualPalabra.toLowerCase())) {
+	            mejorCoincidencia = snippetsManager.getSnippet(key);
+	        }
+	    }
+
+	    // Si encontramos una coincidencia parcial
+	    if (mejorCoincidencia != null) {
+	        reemplazarPalabraPorSnippet(mejorCoincidencia.getValue(), actualPalabra.length());
+	    }
 	}
+		
 	
 	private String obtenerPalabraAntesDelCaret() {
 		//obtenemos la posición del caret (cursor)
@@ -200,12 +210,12 @@ public class CodeArea extends RSyntaxTextArea{
 		}
 	}
 
-	private void reemplazarPalabraPorSnippet(String snippet, int largoPalabra) {
+	private void reemplazarPalabraPorSnippet(String valor, int largoPalabra) {
 		try {
 			int pos = getCaretPosition();
 			int start = pos - largoPalabra;
 			getDocument().remove(start, largoPalabra);
-			getDocument().insertString(start, snippet, null);
+			getDocument().insertString(start, valor, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

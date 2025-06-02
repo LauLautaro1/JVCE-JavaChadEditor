@@ -1,0 +1,44 @@
+[
+  {
+    "key": "main",
+    "value": "public static void main(String[] args) {\n    $END$\n}",
+    "descripcion": "Método main en Java",
+    "paquete": "java"
+  },
+  {
+    "key": "sout",
+    "value": "System.out.println($END$);",
+    "descripcion": "Imprimir en consola",
+    "paquete": "java"
+  },
+  {
+    "key": "fori",
+    "value": "for (int i = 0; i < $LIMIT$; i++) {\n    $END$\n}",
+    "descripcion": "Bucle for con índice",
+    "paquete": "java"
+  },
+  {
+    "key": "if",
+    "value": "if ($CONDICION$) {\n    $END$\n}",
+    "descripcion": "Condicional if",
+    "paquete": "java"
+  },
+  {
+    "key": "class",
+    "value": "public class $CLASS_NAME$ {\n\n    $END$\n\n}",
+    "descripcion": "Plantilla para una clase pública",
+    "paquete": "java"
+  },
+  {
+    "key": "psvm",
+    "value": "public static void main(String[] args) {\n    $END$\n}",
+    "descripcion": "Método main abreviado",
+    "paquete": "java"
+  },
+  {
+    "key": "trycatch",
+    "value": "try {\n    $END$\n} catch (Exception e) {\n    e.printStackTrace();\n}",
+    "descripcion": "Bloque try-catch para manejo de excepciones",
+    "paquete": "java"
+  }
+]

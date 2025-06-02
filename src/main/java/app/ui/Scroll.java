@@ -1,7 +1,11 @@
 package app.ui;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.BorderFactory;
 
+import org.fife.ui.rtextarea.Gutter;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class Scroll extends RTextScrollPane {
@@ -18,7 +22,7 @@ public class Scroll extends RTextScrollPane {
 	 * 
 	 * @param codeArea El área de código a asociar con este panel de desplazamiento.
 	 */
-	public Scroll(CodeArea codeArea) {
+	public Scroll(CodeArea codeArea , Font font) {
 		super(codeArea);
 		
 		setLineNumbersEnabled(true);//muestra los numeros de linea
@@ -34,6 +38,18 @@ public class Scroll extends RTextScrollPane {
 		//Quitando las barras vertical y horizontal de desplazamiento
 		setVerticalScrollBarPolicy(RTextScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		setHorizontalScrollBarPolicy(RTextScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		// Obtener el Gutter (barra lateral izquierda)
+        Gutter gutter = getGutter();
+        
+        Font fuente = new Font(font.getName(), Font.BOLD, 9);;
+        
+        // 🎨 Cambiar color de fondo, fuente, color de número, etc.
+        gutter.setLineNumberFont(fuente);
+        gutter.setLineNumberColor(Color.gray);
+        gutter.setBackground(Color.black);
+        gutter.setBorderColor(Color.DARK_GRAY);
+//        gutter.setFoldIndicatorEnabled(true); // opcional: plegado
 		
 		
 		

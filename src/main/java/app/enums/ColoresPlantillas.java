@@ -243,7 +243,7 @@ public class ColoresPlantillas {
 	
 	
 		public static Color[] getColoresAreaDeCodigo() {
-			return coloresGitHubDarkPlus;
+			return coloresMonokai;
 		}
 
 		public static Color[] getColoresBarra() {

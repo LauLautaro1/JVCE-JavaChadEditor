@@ -41,7 +41,7 @@ public class VentanaPrincipal extends JFrame {
 		codeArea = new CodeArea(fuenteDeTexto);
 
 		
-		Scroll scrollPane = new Scroll(codeArea);
+		Scroll scrollPane = new Scroll(codeArea , fuenteDeTexto);
 		
 		getContentPane().add(scrollPane , BorderLayout.CENTER);
 		
