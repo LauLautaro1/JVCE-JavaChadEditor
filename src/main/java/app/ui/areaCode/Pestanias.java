@@ -1,4 +1,4 @@
-package app.ui;
+package app.ui.areaCode;
 
 import java.awt.Font;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package app.ui;
+package app.ui.areaCode;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -50,10 +50,8 @@ public class Scroll extends RTextScrollPane {
 		// Obtener el Gutter (barra lateral izquierda)
         Gutter gutter = getGutter();
         
-        Font fuente = new Font(font.getName(), Font.BOLD, 9);;
-        
         // 🎨 Cambiar color de fondo, fuente, color de número, etc.
-        gutter.setLineNumberFont(fuente);
+        gutter.setLineNumberFont(font);
         gutter.setLineNumberColor(Color.gray);
         gutter.setBackground(Color.black);
         gutter.setBorderColor(Color.DARK_GRAY);

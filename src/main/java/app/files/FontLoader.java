@@ -14,7 +14,17 @@ public class FontLoader {
 	
 	public static Font cargarFuenteNerd(int tamaño) {
         try {
-            InputStream is = FontLoader.class.getClassLoader().getResourceAsStream("font/JetBrainsMonoNLNerdFont-Regular.ttf");
+        	InputStream is;
+        	
+        	
+        	if(tamaño > 14 && tamaño < 30) {
+        		is = FontLoader.class.getClassLoader().getResourceAsStream("font/CaskaydiaMonoNerdFont-Regular.ttf");}
+        	else {
+        		is = FontLoader.class.getClassLoader().getResourceAsStream("font/CaskaydiaMonoNerdFont-SemiBold.ttf");
+        	}
+        	
+        	
+        	
             if (is == null) {
                 throw new RuntimeException("No se encontró el archivo de fuente");
             }

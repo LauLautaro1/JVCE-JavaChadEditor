@@ -1,4 +1,4 @@
-package app.ui;
+package app.ui.areaCode;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -42,10 +42,6 @@ public class PanelCodeAreas extends JPanel {
 	public PanelCodeAreas(JFrame frame , Font fuenteDeTexto) {
 		
 		setLayout(new BorderLayout());
-		
-		Color[] colores = ColoresPlantillas.getColoresBarra();
-		
-		setBackground(colores[0]);
         
         this.pestanias = new Pestanias(fuenteDeTexto);
         

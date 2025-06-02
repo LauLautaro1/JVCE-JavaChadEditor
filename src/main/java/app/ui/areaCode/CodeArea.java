@@ -1,4 +1,4 @@
-package app.ui;
+package app.ui.areaCode;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -53,6 +53,7 @@ public class CodeArea extends RSyntaxTextArea{
 		
 		
 		//Configuración adicional
+
 		setTabSize(4);
 		setLineWrap(true);
 		setWrapStyleWord(true);
@@ -74,13 +75,17 @@ public class CodeArea extends RSyntaxTextArea{
 		setCloseMarkupTags(true);
 		setAnimateBracketMatching(true);
 		
+		LanguageSupportFactory lsf = LanguageSupportFactory.get();
+        LanguageSupport support = lsf.getSupportFor(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        support.install(textArea); // ← Esto es lo importante
+		
 	}
 	
 	private void configuracionDeEstilo() {
 		setCurrentLineHighlightColor(new Color(0 , 0, 0));
 		
 		setMargin(new Insets(5, 5, 5, 5));
-		setFont(fuenteDeTexto);
+
 	}
 	
 	public void configurarColores() {
@@ -122,6 +127,9 @@ public class CodeArea extends RSyntaxTextArea{
 	    scheme.getStyle(Token.IDENTIFIER).foreground = c[11];
 
 	    setSyntaxScheme(scheme);
+	    
+		setFont(fuenteDeTexto);
+	    
 	    repaint();	
 	}
 

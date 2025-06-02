@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 
 import app.enums.ColoresPlantillas;
 import app.files.FontLoader;
+import app.ui.areaArbolArchivos.PanelParaArbolDeArchivos;
+import app.ui.areaCode.CodeArea;
+import app.ui.areaCode.PanelCodeAreas;
+import app.ui.areaNavegacion.PanelParaNavegar;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -19,14 +23,15 @@ public class VentanaPrincipal extends JFrame {
 	
 	private PanelCodeAreas panelCode;
 	
-	private static Font fuenteDeTexto = FontLoader.cargarFuenteNerd(14);
+	private static Font fuenteDeTexto = FontLoader.cargarFuenteNerd(16);
+	private static Font fuenteDeTextoChica = FontLoader.cargarFuenteNerd(12);
 
 	//---------- Constructor ----------
 	
 	public VentanaPrincipal() {
 		
 		//Setteando la ventana
-		setTitle("JVCE-JavaChadEditor");
+		setTitle("JavaChadEditor");
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(true);
@@ -37,9 +42,13 @@ public class VentanaPrincipal extends JFrame {
 		//Setteando la barra moderna
 		crearPanelCodeAreas();
 		
-		PanelParaNavegar p = new PanelParaNavegar();
+		PanelParaNavegar p = new PanelParaNavegar(fuenteDeTextoChica);
 		
 		getContentPane().add(p, BorderLayout.NORTH);
+		
+//		PanelParaArbolDeArchivos panelArbol = new PanelParaArbolDeArchivos();
+//		
+//		getContentPane().add(panelArbol, BorderLayout.WEST);
 		
 		
 	}

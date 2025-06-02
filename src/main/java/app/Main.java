@@ -3,6 +3,9 @@ package app;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 import app.files.ArchivosManager;
@@ -20,12 +23,19 @@ public class Main {
 		
 		
 		VentanaPrincipal ventana = new VentanaPrincipal();
+		ventana.crearCodeArea("prueba.java");
+		ventana.crearCodeArea("prueba2.java");
+		ventana.crearCodeArea("prueba3.java");
+		ventana.crearCodeArea("prueba4.java");
+		ventana.crearCodeArea("prueba5.java");
+		ventana.crearCodeArea("prueba6.java");
+		
 		ventana.setVisible(true);
 		
 		//Creando Prueba de ArchivosManager
-		ArchivosManager fileManager = new ArchivosManager();
-		ventana.crearCodeArea("a");
-		fileManager.abrirArchivo("src/main/java/app/ui/CodeArea.java", ventana.getCodeArea("a"));
+//		ArchivosManager fileManager = new ArchivosManager();
+		
+//		fileManager.abrirArchivo("src/main/java/app/ui/CodeArea.java", ventana.getCodeArea("a"));
 
 		
 		
