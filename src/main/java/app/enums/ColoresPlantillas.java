@@ -102,22 +102,22 @@ public class ColoresPlantillas {
 		};
 
 	private final static Color[] coloresMacOSLight = new Color[] {
-		    Color.decode("#ffffff"), // 0 - Fondo base
+		    Color.decode("#000000"), // 0 - Fondo base
 		    Color.decode("#f2f2f2"), // 1 - Línea actual
-		    Color.decode("#000000"), // 2 - Texto principal
+		    Color.decode("#ffffff"), // 2 - Texto principal
 
 		    Color.decode("#0066cc"), // 3 - RESERVED_WORD
 		    Color.decode("#ff6f00"), // 4 - DATA_TYPE
 		    Color.decode("#008000"), // 5 - STRING
 		    Color.decode("#999999"), // 6 - Comentarios
 		    Color.decode("#af00db"), // 7 - Números
-		    Color.decode("#000000"), // 8 - Operadores
+		    Color.decode("#ffffff"), // 8 - Operadores
 		    Color.decode("#ff3b30"), // 9 - ERROR_IDENTIFIER
 		    Color.decode("#c800ff"), // 10 - FUNCIONES
-		    Color.decode("#000000"), // 11 - IDENTIFICADORES
+		    Color.decode("#ffffff"), // 11 - IDENTIFICADORES
 
 		    Color.decode("#cce8ff"), // 12 - Selección
-		    Color.decode("#000000"), // 13 - Cursor
+		    Color.decode("#ffffff"), // 13 - Cursor
 
 		    Color.decode("#ff4081"), // 14 - CHAR
 		    Color.decode("#aa00ff"), // 15 - BACKQUOTE
@@ -125,12 +125,12 @@ public class ColoresPlantillas {
 		    Color.decode("#ffab00"), // 17 - VARIABLE
 		    Color.decode("#d500f9"), // 18 - REGEX
 		    Color.decode("#651fff"), // 19 - ANNOTATION
-		    Color.decode("#000000"), // 20 - IDENTIFIER (again)
+		    Color.decode("#ffffff"), // 20 - IDENTIFIER (again)
 		    Color.decode("#ffffff"), // 21 - WHITESPACE
 		    Color.decode("#808080"), // 22 - SEPARATOR
-		    Color.decode("#000000"), // 23 - OPERATOR
+		    Color.decode("#ffffff"), // 23 - OPERATOR
 		    Color.decode("#6200ea"), // 24 - PREPROCESSOR
-		    Color.decode("#000000"), // 25 - TAG_DELIMITER
+		    Color.decode("#ffffff"), // 25 - TAG_DELIMITER
 		    Color.decode("#1e88e5"), // 26 - TAG_NAME
 		    Color.decode("#d32f2f"), // 27 - ATTR
 		    Color.decode("#43a047"), // 28 - ATTR_VALUE
@@ -138,7 +138,7 @@ public class ColoresPlantillas {
 		    Color.decode("#757575"), // 30 - MARKUP_DTD
 		    Color.decode("#00acc1"), // 31 - PROC_INSTR
 		    Color.decode("#ffcc80"), // 32 - CDATA_DELIMITER
-		    Color.decode("#000000"), // 33 - CDATA
+		    Color.decode("#ffffff"), // 33 - CDATA
 		    Color.decode("#689f38"), // 34 - ENTITY_REFERENCE
 		    Color.decode("#ff3b30"), // 35 - ERROR_IDENTIFIER
 		    Color.decode("#d50000"), // 36 - ERROR_NUM_FORMAT
@@ -243,7 +243,7 @@ public class ColoresPlantillas {
 	
 	
 		public static Color[] getColoresAreaDeCodigo() {
-			return coloresMonokai;
+			return coloresMacOSLight;
 		}
 
 		public static Color[] getColoresBarra() {

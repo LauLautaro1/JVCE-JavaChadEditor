@@ -14,18 +14,15 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 public class ArchivosManager {
 	
 	//---------- Variables ----------
-	
-	private RSyntaxTextArea editor;
 
 	//---------- Constructor ----------
 	
-    public ArchivosManager(RSyntaxTextArea editor) {
-        this.editor = editor;
+    public ArchivosManager() {
     }
     
 	//---------- Metodos ----------
 
-    public void abrirArchivo(String ruta) {
+    public void abrirArchivo(String ruta , RSyntaxTextArea editor) {
         try {
             String contenido = Files.readString(Paths.get(ruta));
             editor.setText(contenido);
@@ -36,7 +33,7 @@ public class ArchivosManager {
         }
     }
     
-	public void guardaArchivo(String ruta) {
+	public void guardaArchivo(String ruta , RSyntaxTextArea editor) {
 		try {
 			Files.writeString(Paths.get(ruta), editor.getText());
 		} catch (IOException e) {

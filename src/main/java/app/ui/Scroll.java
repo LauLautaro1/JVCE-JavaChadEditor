@@ -14,7 +14,13 @@ public class Scroll extends RTextScrollPane {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	//---------- Variables ----------
+	
+	private CodeArea codeArea;
 
+	//---------- Constructor ----------
+	
 	/**
 	 * Constructor de la clase Scroll que extiende RTextScrollPane. Configura el
 	 * área de código para mostrar números de línea, indicador de plegado, icono en
@@ -24,6 +30,8 @@ public class Scroll extends RTextScrollPane {
 	 */
 	public Scroll(CodeArea codeArea , Font font) {
 		super(codeArea);
+		
+		this.codeArea = codeArea;
 		
 		setLineNumbersEnabled(true);//muestra los numeros de linea
 		setFoldIndicatorEnabled(true);//muestra el indicador de plegado
@@ -49,14 +57,15 @@ public class Scroll extends RTextScrollPane {
         gutter.setLineNumberColor(Color.gray);
         gutter.setBackground(Color.black);
         gutter.setBorderColor(Color.DARK_GRAY);
-//        gutter.setFoldIndicatorEnabled(true); // opcional: plegado
 		
-		
-		
-		
-		
-		
-		
+	}
+	
+	//---------- Getters y Setters ----------
+	
+	//Funcion para obtener el CodeArea asociado a este Scroll, por que 
+	//abra varias pestañas de archivos.
+	public CodeArea getCodeArea() {
+		return codeArea;
 	}
 
 }
