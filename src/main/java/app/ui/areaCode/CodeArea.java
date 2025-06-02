@@ -75,10 +75,6 @@ public class CodeArea extends RSyntaxTextArea{
 		setCloseMarkupTags(true);
 		setAnimateBracketMatching(true);
 		
-		LanguageSupportFactory lsf = LanguageSupportFactory.get();
-        LanguageSupport support = lsf.getSupportFor(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        support.install(textArea); // ← Esto es lo importante
-		
 	}
 	
 	private void configuracionDeEstilo() {
