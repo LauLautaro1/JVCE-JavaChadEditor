@@ -2,6 +2,10 @@ package app.sintaxis;
 
 import java.awt.Color;
 
+/**
+ * Enum que define los estilos utilizados en el editor de código. Cada estilo
+ * tiene un color asociado. esto lo usamos mas bien como mapeo en el editor de código para saber que estilo cambiar.
+ */
 public enum EstilosEnum {
 	normalStyle(Color.WHITE),
 	keywordStyle(new Color(0x569CD6)),

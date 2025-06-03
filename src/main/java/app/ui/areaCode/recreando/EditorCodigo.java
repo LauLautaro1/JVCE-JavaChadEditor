@@ -31,7 +31,7 @@ public class EditorCodigo extends JTextPane {
     
     private StyleContext styleContext = StyleContext.getDefaultStyleContext();
 
-    // Definición de las reglas de estilo.
+    // Definición de las reglas de estilo, los predeterminados son los siguientes:
     private AttributeSet normalStyle = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.WHITE);
     private AttributeSet keywordStyle = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, new Color(0x569CD6));
     private AttributeSet commentStyle = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, new Color(0x6A9955));
@@ -39,12 +39,13 @@ public class EditorCodigo extends JTextPane {
     private AttributeSet numberStyle = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, new Color(0xB5CEA8));
     private AttributeSet functionStyle = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, new Color(0xDCDCAA));
 	
+    //lista de todos los estilo, el cual vamos a utilizar para resaltar el texto.
     private List<ReglaEstilo> reglasEstilo = new ArrayList<>();
     
+    private String[] regexEstilos;
+    
+    // Mapa para almacenar los estilos con sus correspondientes Enum, tiene tamaño fijo el cual son la cantidad de reglas de estilo.
     private final EnumMap<EstilosEnum, AttributeSet> mapaEstilos = new EnumMap<>(EstilosEnum.class);
-    
-    
-
     
 	//---------- Constructor ----------
 	
@@ -69,19 +70,26 @@ public class EditorCodigo extends JTextPane {
 	//Configuracion inicial de estilo.
 	private void configuracionInicialDeEstilo() {
 		// Agregar estilos predeterminados
-        agregarEstilosResaltado(EstilosEnum.normalStyle, ".*", Color.WHITE);
-        agregarEstilosResaltado(EstilosEnum.keywordStyle, "\\b(if|else|while|for|return|function)\\b", new Color(0x569CD6));
-        agregarEstilosResaltado(EstilosEnum.commentStyle, "//.*|/\\*.*?\\*/", new Color(0x6A9955));
-        agregarEstilosResaltado(EstilosEnum.stringStyle, "\".*?\"", new Color(0xCE9178));
-        agregarEstilosResaltado(EstilosEnum.numberStyle, "\\b\\d+(\\.\\d+)?\\b", new Color(0xB5CEA8));
-        agregarEstilosResaltado(EstilosEnum.functionStyle, "\\b\\w+\\s*\\(.*?\\)", new Color(0xDCDCAA));
-        // Agregar los estilos al mapa
-        mapaEstilos.put(EstilosEnum.normalStyle, normalStyle);
-        mapaEstilos.put(EstilosEnum.keywordStyle, keywordStyle);
-        mapaEstilos.put(EstilosEnum.commentStyle, commentStyle);
-        mapaEstilos.put(EstilosEnum.stringStyle, stringStyle);
-        mapaEstilos.put(EstilosEnum.numberStyle, numberStyle);
-        mapaEstilos.put(EstilosEnum.functionStyle, functionStyle);
+        
+	}
+	
+	public void definirElRegexDeLosEstilos() {
+		if (regexEstilos == null) {
+			this.regexEstilos = new String[6];
+		}
+		
+		
+		
+		
+	}
+	
+	public void agregarColoresATodosLosEstilos(Color color1, Color color2, Color color3, Color color4, Color color5, Color color6) {
+		agregarEstilosResaltado(EstilosEnum.normalStyle, ".*", color1);
+        agregarEstilosResaltado(EstilosEnum.keywordStyle, "\\b(if|else|while|for|return|function)\\b", color2);
+        agregarEstilosResaltado(EstilosEnum.commentStyle, "//.*|/\\*.*?\\*/", color3);
+        agregarEstilosResaltado(EstilosEnum.stringStyle, "\".*?\"", color4);
+        agregarEstilosResaltado(EstilosEnum.numberStyle, "\\b\\d+(\\.\\d+)?\\b", color5);
+        agregarEstilosResaltado(EstilosEnum.functionStyle, "\\b\\w+\\s*\\(.*?\\)", color6);
 	}
 	
 	
@@ -92,10 +100,8 @@ public class EditorCodigo extends JTextPane {
 		if (regex == null || regex.isEmpty() || color == null) {
 			throw new IllegalArgumentException("El regex y el color no pueden ser nulos o vacíos.");
 		}
-		
 		AttributeSet estiloAplicado = styleContext.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, color);
-		
-		// Crear una regla de estilo y agregarla a la lista de reglas.
+		mapaEstilos.put(estilo, estiloAplicado);
 		ReglaEstilo regla = new ReglaEstilo(regex, estiloAplicado );
 		reglasEstilo.add(regla);
 	}
@@ -119,7 +125,7 @@ public class EditorCodigo extends JTextPane {
 	
 	//---------- Resaltar
 	
-	// Resaltado en tiempo real
+	// Resaltado en tiempo real, esto es para detectar cambios en el editor de texto.
     private void configurarListener() {
         doc.addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { resaltar(); }
